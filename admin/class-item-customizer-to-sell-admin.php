@@ -97,7 +97,36 @@ class Item_Customizer_To_Sell_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/item-customizer-to-sell-admin.js', array( 'jquery' ), $this->version, false );
-
+        $this->icts_insert_js();
 	}
+
+    private function icts_insert_js(){
+
+        if (!is_home()) return;
+
+//        wp_register_script('dcms_miscript',get_stylesheet_directory_uri(). '/js/script.js', array('jquery'), '1', true );
+//        wp_enqueue_script('dcms_miscript');
+
+//        wp_localize_script('dcms_miscript','dcms_vars',['ajaxurl'=>admin_url('admin-ajax.php')]);
+        wp_localize_script($this->plugin_name,'icts_vars',['ajaxurl'=>admin_url('admin-ajax.php')]);
+    }
+
+	/**
+     * Register the administration menu for this plugin into the WordPress Dashboard menu.
+     *
+     * @since    1.0.0
+     */
+	    public function add_plugin_admin_menu()
+        {
+            /*
+             * Add a settings page for this plugin to the Settings menu.
+             *
+             * NOTE:  Alternative menu locations are available via WordPress administration menu functions.
+             *
+             *        Administration Menus: http://codex.wordpress.org/Administration_Menus
+             *
+             */
+            add_options_page('Item Customizer To Sell', 'Item Customizer To Sell', 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+        }
 
 }

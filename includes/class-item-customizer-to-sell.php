@@ -172,6 +172,8 @@ class Item_Customizer_To_Sell {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_ajax_nopriv_icts_get_image_url', $plugin_public, 'icts_send_image_url' );
+		$this->loader->add_action( 'wp_ajax_icts_get_image_url', $plugin_public, 'icts_send_image_url' );
 
 	}
 

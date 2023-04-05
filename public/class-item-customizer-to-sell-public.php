@@ -97,7 +97,28 @@ class Item_Customizer_To_Sell_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/item-customizer-to-sell-public.js', array( 'jquery' ), $this->version, false );
-
+        $this->icts_insert_js();
 	}
+
+    private function icts_insert_js(){
+
+        if (!is_home()) return;
+
+//        wp_register_script('dcms_miscript',get_stylesheet_directory_uri(). '/js/script.js', array('jquery'), '1', true );
+//        wp_enqueue_script('dcms_miscript');
+
+//        wp_localize_script('dcms_miscript','dcms_vars',['ajaxurl'=>admin_url('admin-ajax.php')]);
+        wp_localize_script($this->plugin_name,'icts_vars',['ajaxurl'=>admin_url('admin-ajax.php')]);
+    }
+
+    function icts_send_image_url()
+    {
+        $array = $_POST['array'];
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'image_element';
+        $sql = "SELECT * FROM $table_name WHERE image_id IN (SELECT image_id FROM $table_name WHERE element_id IN ($element_id) AND pos IN ($pos)) AND element_id IN ($element_id) AND pos IN ($pos)";
+        $result = $wpdb->get_results($sql);
+        return $result;
+    }
 
 }

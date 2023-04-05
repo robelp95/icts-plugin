@@ -30,7 +30,33 @@ class Item_Customizer_To_Sell_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+	    Item_Customizer_To_Sell_Deactivator::dropTableElement();
+        Item_Customizer_To_Sell_Deactivator::dropTableImage();
+        Item_Customizer_To_Sell_Deactivator::dropTableImageElement();
 
 	}
 
+	public static function dropTableElement(){
+	            global $wpdb;
+        $table_name = $wpdb->prefix . 'element';
+        $sql = "DROP TABLE $table_name";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
+
+    public static function dropTableImage(){
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'image';
+        $sql = "DROP TABLE $table_name";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
+
+    public static function dropTableImageElement(){
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'image_element';
+        $sql = "DROP TABLE $table_name";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
 }
